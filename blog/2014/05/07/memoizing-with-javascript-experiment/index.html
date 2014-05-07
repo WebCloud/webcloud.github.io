@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Memoizing with Javascript - experiment - WebCloud</title>
+  <meta name="author" content="Vinicius Dallacqua">
+
+  
+  <meta name="description" content="Javascript, basics Memoizing with Javascript - experiment On this quick blog post we will see a glimpse of the power of the Javascript&rsquo;s &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://WebCloud.github.io/blog/2014/05/07/memoizing-with-javascript-experiment">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/styles.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="WebCloud" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="/javascripts/jquery.sidr.min.js"></script>
+  <script src="/javascripts/ah-blue.js"></script>
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-49265498-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head> 
+
+<body   >
+  <div class="aux-container">
+    <a id="nav-toggle" href="#sidr"></a>
+    <a id="search-toggle"></a>
+</div>
+
+<header class="header-container clearfix">
+        <a href="/"><img src="/images/logo-big.png"></a>
+</header>
+
+
+  <div class="main-container">
+    <div class="main wrapper clearfix">
+    	
+    	<aside>
+			
+			  	<div class="search-container">
+					<form action="http://google.com/search" method="get">
+						<fieldset role="search">
+							<input type="hidden" name="q" value="site:blog.alexharr.is" />
+							<input class="search-field" type="text" name="q" results="0" placeholder=""/>
+							<input class="submit" type="submit" value=""/>
+						</fieldset>
+					</form>
+				</div>
+			
+		  <div id="main-nav">
+    <nav>
+        <ul>
+        	<li>
+        		
+					
+<section>
+	<span>
+		<img src="http://www.gravatar.com/avatar/b01d191fc06f99caa0f007c44e3d2688" alt="Gravatar of Vinicius Dallacqua " title="Gravatar of Vinicius Dallacqua" />
+	</span>
+</section>
+<h3>Recent Posts</h3>
+<ul>
+	
+    <li>
+    	<a href="/blog/2014/05/07/memoizing-with-javascript-experiment/">Memoizing with Javascript - experiment</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/04/07/emberjs-authentication-the-right-way/">Ember.js Authentication - the right way</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/04/07/emberjs-authentication-the-right-way-javascript-version/">Ember.js Authentication - the right way (Javascript version)</a>
+    </li>
+    
+</ul>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/webcloud">@webcloud</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'webcloud',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/+ViniciusDallacqua?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+				
+        	</li>
+        </ul>
+    </nav>
+</div>
+		</aside>
+		
+      <div>
+<article>
+	<header>
+  <div class="article-tags">
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>Javascript</a>, <a class='category' href='/blog/categories/basics/'>basics</a>
+  
+</span>
+
+
+  </div>
+  
+    <h1>
+      Memoizing with Javascript - experiment
+    </h1>
+  
+</header>
+
+  <section><p>On this quick blog post we will see a glimpse of the power of the Javascript&rsquo;s functional scope. You can have a well structured, modular and reusable code with it&rsquo;s use.</p>
+
+<!--more-->
+
+
+
+
+<blockquote><p>Memoization (no, that’s not a typo) is the process of building a function that’s capable of remembering its previously computed values. This can markedly increase performance by avoiding needless complex computations that have already been performed.</p><footer><strong>@jeresig</strong> <cite><a href='http://www.manning.com/resig/'>Secrets of the JavaScript Ninja</a></cite></footer></blockquote>
+
+
+<p>This principle is very interesting and it&rsquo;s also addressed on Crockford&rsquo;s <a href="http://shop.oreilly.com/product/9780596517748.do">JavaScript: The Good Parts</a>, both are must have books for any Javascript programmer out there.</p>
+
+<p>On Resig&rsquo;s book we have a demonstration of a memoizer to calculate prime numbers with the following code:</p>
+
+<figure class='code'><figcaption><span>Memoizer Function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">isPrime</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isPrime</span><span class="p">.</span><span class="nx">answers</span><span class="p">)</span> <span class="nx">isPrime</span><span class="p">.</span><span class="nx">answers</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">isPrime</span><span class="p">.</span><span class="nx">answers</span><span class="p">[</span><span class="nx">value</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;had in cache...&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">isPrime</span><span class="p">.</span><span class="nx">answers</span><span class="p">[</span><span class="nx">value</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">prime</span> <span class="o">=</span> <span class="nx">value</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 1 can never be prime</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">value</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">%</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">prime</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hadn\&#39;t in cache...&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">isPrime</span><span class="p">.</span><span class="nx">answers</span><span class="p">[</span><span class="nx">value</span><span class="p">]</span> <span class="o">=</span> <span class="nx">prime</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Even though this code is very good to demonstrate that functions are first class objects, that might not be the most intended way to actually do that function. Mostly for security reasons, you don&rsquo;t want your internal objects used for control exposed to the global scope. Now, let&rsquo;s take a slightly different approach to the same problem.</p>
+
+<figure class='code'><figcaption><span>Different approach on the memoizer Function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">isPrimeScoped</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">answers</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">answers</span><span class="p">[</span><span class="nx">value</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;had in cache...&#39;</span><span class="p">);</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">answers</span><span class="p">[</span><span class="nx">value</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">prime</span> <span class="o">=</span> <span class="nx">value</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 1 can never be prime</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">value</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">%</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">prime</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hadn\&#39;t in cache...&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">answers</span><span class="p">[</span><span class="nx">value</span><span class="p">]</span> <span class="o">=</span> <span class="nx">prime</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'><span class="p">}());</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The code above creates a auto executing anonymous function that will wrap the private variable <code>answers</code> into it&rsquo;s scope, after that it will return the function that will be stored on the <code>isPrimeScoped</code> variable to be used. Now, even though the first function gets executed and returned immediately, the variable <code>answers</code> will be available, only, for the returned function, making that variable it&rsquo;s private object.</p>
+
+<p>Both functions are meant to be called the same way, and expected to have the same behaviour, but on the <code>isPrimeScoped</code> the &lsquo;cache&rsquo; object <code>answers</code> is private and not accessible from the global scope as a property of that function.</p>
+
+<figure class='code'><figcaption><span>Running both functions </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">isPrime</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// logs &quot;hadn&#39;t in cache...&quot;</span>
+</span><span class='line'><span class="c1">// returns true</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">isPrime</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// logs &quot;had in cache...&quot;</span>
+</span><span class='line'><span class="c1">// returns true</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">isPrime</span><span class="p">.</span><span class="nx">answers</span> <span class="c1">// object {5: true}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">isPrime</span><span class="p">.</span><span class="nx">answers</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="kc">false</span> <span class="c1">// oops, I&#39;m overwriting the control object</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">isPrime</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// logs &quot;had in cache...&quot;</span>
+</span><span class='line'><span class="c1">// returns false, wrongly</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">isPrimeScoped</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// logs &quot;hadn&#39;t in cache...&quot;</span>
+</span><span class='line'><span class="c1">// returns true</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">isPrimeScoped</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// logs &quot;had in cache...&quot;</span>
+</span><span class='line'><span class="c1">// returns true</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">isPrimeScoped</span><span class="p">.</span><span class="nx">answers</span> <span class="c1">// undefined</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This technique, called closure, is very useful, and largely used when you want to protect objects from the global scope, if you browse through the jQuery code you will see it&rsquo;s use. On the global scope should be only objects/functions meant to be accessed by/from it.</p>
+
+<p>Paul Irish&rsquo;s <a href="https://www.youtube.com/watch?v=i_qE1iAmjFg">10 Things I Learned from the jQuery Source video</a> from 2010 (a, not so, long time ago) talks about that technique and more. you can also read about closure and other great techniques on the books mentioned on the beginning of this post.</p>
+
+<p><em>PS: I know that Resig don&rsquo;t say that&rsquo;s the best way to do it, I&rsquo;m just making an experiment on the same subject</em></p>
+</section>
+
+
+
+	
+	  <section class="comments">
+	    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+	  </section>
+	
+</article>
+</div>
+
+    </div>
+  </div>
+  <footer class="main-footer">
+	<section class="interior-footer">
+		<span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+	</section>
+</footer>
+
+
+  
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'webcloudblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://WebCloud.github.io/blog/2014/05/07/memoizing-with-javascript-experiment/';
+        var disqus_url = 'http://WebCloud.github.io/blog/2014/05/07/memoizing-with-javascript-experiment/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+</body>
+</html>
