@@ -1,0 +1,13 @@
+<div id="main-nav">
+    <nav>
+        <ul>
+        	<li>
+        		{% if site.blog_index_asides.size %}
+					{% include_array blog_index_asides %}
+				{% else %}
+					{% include_array default_asides %}
+				{% endif %}
+        	</li>
+        </ul>
+    </nav>
+</div>

@@ -55,14 +55,20 @@ module Jekyll
       @title = nil
       @caption = nil
       @filetype = nil
+      @line_start = nil
       @highlight = true
       if markup =~ /\s*lang:(\S+)/i
         @filetype = $1
         markup = markup.sub(/\s*lang:(\S+)/i,'')
       end
+      @line_start = 1
+      if markup =~ /\s*start:(\S+)/i
+        @line_start = $1.to_i
+        markup = markup.sub(/\s*start:(\S+)/i,'')
+      end
       if markup =~ CaptionUrlTitle
         @file = $1
-        @caption = "<figcaption><span>#{$1}</span><a href='#{$2}'>#{$3 || 'link'}</a></figcaption>"
+        @caption = "<figcaption><span>#{$1}</span><a href='#{$2}' target='_blank'>#{$3 || 'link'}</a></figcaption>"
       elsif markup =~ Caption
         @file = $1
         @caption = "<figcaption><span>#{$1}</span></figcaption>\n"
@@ -79,9 +85,9 @@ module Jekyll
       source = "<figure class='code'>"
       source += @caption if @caption
       if @filetype
-        source += "#{highlight(code, @filetype)}</figure>"
+        source += "#{highlight(code, @filetype, @line_start)}</figure>"
       else
-        source += "#{tableize_code(code.lstrip.rstrip.gsub(/</,'&lt;'))}</figure>"
+        source += "#{tableize_code(code.lstrip.rstrip.gsub(/</,'&lt;'),@line_start)}</figure>"
       end
       source = safe_wrap(source)
       source = context['pygments_prefix'] + source if context['pygments_prefix']

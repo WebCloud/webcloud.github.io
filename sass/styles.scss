@@ -1,0 +1,79 @@
+@import "compass";
+@include global-reset;
+
+// Includes
+@import "variables";
+@import "mixins";
+
+// Plugins
+@import "code.scss";
+@import "sidr.scss";
+
+//General Stuff
+@import "boilerplate.scss";
+@import "structure.scss";
+@import "theme.scss";
+@import "typography.scss";
+
+.info.warn{
+  background: #F3F0DA;
+  font-size: 0.9rem;
+  padding: .4rem 1rem;
+  margin: 1rem 0;
+}
+
+q,blockquote {
+  quotes:none;
+}
+
+q:before,q:after,blockquote:before,blockquote:after {
+  content:none;
+}
+
+blockquote {
+  font-style:italic;
+  position:relative;
+  line-height:1.5em;
+  padding-left:1em;
+  border-left:4px solid rgba(170,170,170,0.5);
+  margin-bottom: 1.3em;
+}
+
+blockquote cite a {
+  color:#aaa!important;
+  word-wrap:break-word;
+}
+
+blockquote cite:before {
+  content:'\2014';
+  padding-right:.3em;
+  padding-left:.3em;
+  color:#aaa;
+}
+
+.pullquote-right:before,.pullquote-left:before {
+  border:none;
+  content:attr(data-pullquote);
+  float:right;
+  width:45%;
+  position:relative;
+  top:7px;
+  font-size:1.4em;
+  line-height:1.45em;
+  margin:.5em 0 1em 1.5em;
+  padding:0;
+}
+
+.pullquote-left:before {
+  float:left;
+  margin:.5em 1.5em 1em 0;
+}
+
+em,q,em,dfn,blockquote cite {
+  font-style:italic;
+}
+
+blockquote {
+  padding-left:1.5em;
+  border-left-width:4px;
+}
