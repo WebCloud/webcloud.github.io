@@ -4,7 +4,7 @@
   <title><![CDATA[WebCloud]]></title>
   <link href="http://WebCloud.github.io/atom.xml" rel="self"/>
   <link href="http://WebCloud.github.io/"/>
-  <updated>2014-05-08T02:16:11+02:00</updated>
+  <updated>2014-05-08T02:17:30+02:00</updated>
   <id>http://WebCloud.github.io/</id>
   <author>
     <name><![CDATA[Vinicius Dallacqua]]></name>
@@ -72,7 +72,7 @@
 
 <h1>The closure way</h1>
 
-<p>Even though the code above is very good to demonstrate that functions are first class objects, that might not be the most intended way to actually do that function. Mostly for security reasons, you don&rsquo;t want your internal objects used for control exposed to the global scope. Now, let&rsquo;s take a slightly different approach to the same problem.</p>
+<p>Even though the code above is very good to demonstrate that functions are also first class objects, that might not be the most intended way to actually do that function. Mostly for security reasons, you don&rsquo;t want your internal objects used for control exposed to the global scope. Now, let&rsquo;s take a slightly different approach to the same problem.</p>
 
 <figure class='code'><figcaption><span>Different approach on the memoizer Function </span></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
