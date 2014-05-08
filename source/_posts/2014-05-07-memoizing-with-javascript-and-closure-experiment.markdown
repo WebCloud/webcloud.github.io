@@ -126,7 +126,7 @@ this.myFunction = function myFunction(){
 }
 {% endcodeblock %}
 
-That is why the first log on the `second` variable is undefined, the variable was not asigned to any up to that point, which will defaults to undefined.
+That is why the first log on the `second` variable is undefined, the variable was not asigned to any value up to that point, which will defaults to undefined.
 
 You can also notice that the function declaration is modified to `this.myFunction = function myFunction(){...}`, this happens to make `myFunction` available to the global scope as window.myFunction, where 'this' refers to the window object on the global scope.
 
