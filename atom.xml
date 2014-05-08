@@ -4,7 +4,7 @@
   <title><![CDATA[WebCloud]]></title>
   <link href="http://WebCloud.github.io/atom.xml" rel="self"/>
   <link href="http://WebCloud.github.io/"/>
-  <updated>2014-05-08T02:26:23+02:00</updated>
+  <updated>2014-05-08T02:27:54+02:00</updated>
   <id>http://WebCloud.github.io/</id>
   <author>
     <name><![CDATA[Vinicius Dallacqua]]></name>
@@ -234,7 +234,7 @@
 
 <h1>Closure on the closure topic</h1>
 
-<p>Closures are very useful, and largely used when you want to protect objects from the global scope, if you browse through the jQuery code you will see it&rsquo;s use. On the global scope should be only objects/functions meant to be accessed by/from it.</p>
+<p>Closures are very useful, and largely used when you want to protect objects from the global scope, if you browse through the jQuery, or any major library, code you will see it in use. On the global scope should be only objects/functions meant to be accessed by/from it.</p>
 
 <p>Paul Irish&rsquo;s <a href="https://www.youtube.com/watch?v=i_qE1iAmjFg">10 Things I Learned from the jQuery Source video</a> from 2010 (a, not so, long time ago) talks about that technique and more. you can also read about closure and other great techniques on the books mentioned on the beginning of this post.</p>
 
