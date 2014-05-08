@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | WebCloud]]></title>
   <link href="http://WebCloud.github.io/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://WebCloud.github.io/"/>
-  <updated>2014-05-08T02:13:14+02:00</updated>
+  <updated>2014-05-08T02:16:11+02:00</updated>
   <id>http://WebCloud.github.io/</id>
   <author>
     <name><![CDATA[Vinicius Dallacqua]]></name>
@@ -14,11 +14,11 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Memoizing with Javascript - experiment]]></title>
-    <link href="http://WebCloud.github.io/blog/2014/05/07/memoizing-with-javascript-experiment/"/>
+    <title type="html"><![CDATA[Memoizing with Javascript and closure - experiment]]></title>
+    <link href="http://WebCloud.github.io/blog/2014/05/07/memoizing-with-javascript-and-closure-experiment/"/>
     <updated>2014-05-07T19:59:07+02:00</updated>
-    <id>http://WebCloud.github.io/blog/2014/05/07/memoizing-with-javascript-experiment</id>
-    <content type="html"><![CDATA[<h1>It&rsquo;s good to know the basics</h1>
+    <id>http://WebCloud.github.io/blog/2014/05/07/memoizing-with-javascript-and-closure-experiment</id>
+    <content type="html"><![CDATA[<h2>It&rsquo;s good to know the basics</h2>
 
 <p>On this quick blog post we will see a glimpse of the power of the Javascript&rsquo;s functional scope and the usage of closures applied to <em>memoization</em>. With the usage of closures you can have a well structured, modular and reusable code with it&rsquo;s use.</p>
 
@@ -80,7 +80,7 @@
 
 <h1>The closure way</h1>
 
-<p>Even though this code is very good to demonstrate that functions are first class objects, that might not be the most intended way to actually do that function. Mostly for security reasons, you don&rsquo;t want your internal objects used for control exposed to the global scope. Now, let&rsquo;s take a slightly different approach to the same problem.</p>
+<p>Even though the code above is very good to demonstrate that functions are first class objects, that might not be the most intended way to actually do that function. Mostly for security reasons, you don&rsquo;t want your internal objects used for control exposed to the global scope. Now, let&rsquo;s take a slightly different approach to the same problem.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Different approach on the memoizer Function </span></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
