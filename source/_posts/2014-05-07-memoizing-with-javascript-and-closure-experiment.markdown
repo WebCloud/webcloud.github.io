@@ -131,7 +131,7 @@ That is why the first log on the `second` variable is undefined, the variable wa
 You can also notice that the function declaration is modified to `this.myFunction = function myFunction(){...}`, this happens to make `myFunction` available to the global scope as window.myFunction, where 'this' refers to the window object on the global scope.
 
 # Closure on the closure topic
-Closures are very useful, and largely used when you want to protect objects from the global scope, if you browse through the jQuery code you will see it's use. On the global scope should be only objects/functions meant to be accessed by/from it.
+Closures are very useful, and largely used when you want to protect objects from the global scope, if you browse through the jQuery, or any major library, code you will see it in use. On the global scope should be only objects/functions meant to be accessed by/from it.
 
 Paul Irish's [10 Things I Learned from the jQuery Source video](https://www.youtube.com/watch?v=i_qE1iAmjFg) from 2010 (a, not so, long time ago) talks about that technique and more. you can also read about closure and other great techniques on the books mentioned on the beginning of this post.
 
