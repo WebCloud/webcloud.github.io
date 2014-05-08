@@ -107,7 +107,7 @@ function myFunction(){
 }
 {% endcodeblock %}
 
-For some developers comming from most, if not all, languages that might look strange. This is due to the Javascript compiler/runtimes, it picks any variable declaration and breaks into two parts, the first one is the declaration itself `var first = undefined, second = undefined;` and places on the very beginning of the function body. And the second part which is the value assignment and it's placed wherever the variable was first assigned. So the code above will be translated to someting similar to the following code:
+For some developers comming from most, if not all, languages that might look strange. This is due to the Javascript compiler/runtimes, it picks any variable declaration and breaks into two parts. The first one is the declaration itself `var first = undefined, second = undefined;` and places on the very beginning of the function body. And the second part which is the value assignment and it's placed wherever the variable was first assigned. So the code above will be translated to someting similar to the following code:
 
 {% codeblock Different approach on the memoizer Function lang:javascript %}
 this.myFunction = function myFunction(){
