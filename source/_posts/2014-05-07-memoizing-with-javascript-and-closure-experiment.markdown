@@ -135,4 +135,4 @@ Closures are very useful, and largely used when you want to protect objects from
 
 Paul Irish's [10 Things I Learned from the jQuery Source video](https://www.youtube.com/watch?v=i_qE1iAmjFg) from 2010 (a, not so, long time ago) talks about that technique and more. you can also read about closure and other great techniques on the books mentioned on the beginning of this post.
 
-_PS: I know that Resig don't say that's the best way to do it, I'm just making an experiment on the same subject_
+_PS: I know that Resig don't say that's the best way to do memoizing, I'm just making an experiment on the same subject and grabbing his code to demonstrate the importance of the closures_
