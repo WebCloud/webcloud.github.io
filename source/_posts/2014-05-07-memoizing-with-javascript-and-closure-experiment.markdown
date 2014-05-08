@@ -39,7 +39,7 @@ function isPrime(value) {
 {% endcodeblock %}
 
 # The closure way
-Even though the code above is very good to demonstrate that functions are first class objects, that might not be the most intended way to actually do that function. Mostly for security reasons, you don't want your internal objects used for control exposed to the global scope. Now, let's take a slightly different approach to the same problem.
+Even though the code above is very good to demonstrate that functions are also first class objects, that might not be the most intended way to actually do that function. Mostly for security reasons, you don't want your internal objects used for control exposed to the global scope. Now, let's take a slightly different approach to the same problem.
 
 {% codeblock Different approach on the memoizer Function lang:javascript %}
 var isPrimeScoped = (function(){
