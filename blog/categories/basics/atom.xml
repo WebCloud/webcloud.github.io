@@ -4,7 +4,7 @@
   <title><![CDATA[Category: basics | WebCloud]]></title>
   <link href="http://WebCloud.github.io/blog/categories/basics/atom.xml" rel="self"/>
   <link href="http://WebCloud.github.io/"/>
-  <updated>2014-05-08T02:17:30+02:00</updated>
+  <updated>2014-05-08T02:21:32+02:00</updated>
   <id>http://WebCloud.github.io/</id>
   <author>
     <name><![CDATA[Vinicius Dallacqua]]></name>
@@ -129,39 +129,6 @@
 
 <p>The code above creates a auto executing anonymous function that will wrap the private variable <code>answers</code> into it&rsquo;s scope, after that it will return the function that will be stored on the <code>isPrimeScoped</code> variable to be used. Now, even though the first function gets executed and returned immediately, the variable <code>answers</code> will be available, only, for the returned function, making that variable it&rsquo;s private object.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Different approach on the memoizer Function </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">myFunction</span><span class="p">(){</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">first</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">I</span> <span class="nx">can</span> <span class="nx">access</span> <span class="k">this</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// undefined&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="k">if</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="kd">var</span> <span class="nx">second</span> <span class="o">=</span> <span class="s2">&quot;And also this&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span> <span class="c1">// &amp;ldquo;I can access this&amp;rdquo;</span>
-</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// &amp;ldquo;And also this&amp;rdquo;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
 <p>Both functions are meant to be called the same way, and expected to have the same behaviour, but on the <code>isPrimeScoped</code> the &lsquo;cache&rsquo; object <code>answers</code> is private and not accessible from the global scope as a property of that function.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Running both functions </span></figcaption>
@@ -209,7 +176,42 @@
 
 <h1>Some further explanations</h1>
 
-<p>The availability of the <code>answers</code> object to the returned function happens because Javascript have a function scope, which means that whatever variable you write inside of a variable is going to be accessible on the entire function it&rsquo;s declared. This is due to the Javascript compiler, that picks any variable declaration and breaks into two parts, the first one is the declaration itself <code>var first = undefined, second = undefined;</code> and places on the very beginning of the function body. And the second part which is the value assignment and it&rsquo;s placed wherever the variable was first assigned. So the code above will be translated to someting similar to the following code:</p>
+<p>The availability of the <code>answers</code> object to the returned function happens because Javascript have a function scope, which means that whatever variable you write inside of a function is going to be accessible on the entire function body.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Different approach on the memoizer Function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">myFunction</span><span class="p">(){</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">first</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">I</span> <span class="nx">can</span> <span class="nx">access</span> <span class="k">this</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// undefined&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="k">if</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="kd">var</span> <span class="nx">second</span> <span class="o">=</span> <span class="s2">&quot;And also this&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span> <span class="c1">// &amp;ldquo;I can access this&amp;rdquo;</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// &amp;ldquo;And also this&amp;rdquo;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>For some developers comming from most, if not all, languages that might look strange. This is due to the Javascript compiler/runtimes, it picks any variable declaration and breaks into two parts, the first one is the declaration itself <code>var first = undefined, second = undefined;</code> and places on the very beginning of the function body. And the second part which is the value assignment and it&rsquo;s placed wherever the variable was first assigned. So the code above will be translated to someting similar to the following code:</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Different approach on the memoizer Function </span></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
