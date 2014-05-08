@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | WebCloud]]></title>
   <link href="http://WebCloud.github.io/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://WebCloud.github.io/"/>
-  <updated>2014-05-08T01:31:53+02:00</updated>
+  <updated>2014-05-08T02:13:14+02:00</updated>
   <id>http://WebCloud.github.io/</id>
   <author>
     <name><![CDATA[Vinicius Dallacqua]]></name>
@@ -18,7 +18,9 @@
     <link href="http://WebCloud.github.io/blog/2014/05/07/memoizing-with-javascript-experiment/"/>
     <updated>2014-05-07T19:59:07+02:00</updated>
     <id>http://WebCloud.github.io/blog/2014/05/07/memoizing-with-javascript-experiment</id>
-    <content type="html"><![CDATA[<p>On this quick blog post we will see a glimpse of the power of the Javascript&rsquo;s functional scope. You can have a well structured, modular and reusable code with it&rsquo;s use.</p>
+    <content type="html"><![CDATA[<h1>It&rsquo;s good to know the basics</h1>
+
+<p>On this quick blog post we will see a glimpse of the power of the Javascript&rsquo;s functional scope and the usage of closures applied to <em>memoization</em>. With the usage of closures you can have a well structured, modular and reusable code with it&rsquo;s use.</p>
 
 <!--more-->
 
@@ -76,6 +78,8 @@
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
+<h1>The closure way</h1>
+
 <p>Even though this code is very good to demonstrate that functions are first class objects, that might not be the most intended way to actually do that function. Mostly for security reasons, you don&rsquo;t want your internal objects used for control exposed to the global scope. Now, let&rsquo;s take a slightly different approach to the same problem.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Different approach on the memoizer Function </span></figcaption>
@@ -125,6 +129,39 @@
 
 <p>The code above creates a auto executing anonymous function that will wrap the private variable <code>answers</code> into it&rsquo;s scope, after that it will return the function that will be stored on the <code>isPrimeScoped</code> variable to be used. Now, even though the first function gets executed and returned immediately, the variable <code>answers</code> will be available, only, for the returned function, making that variable it&rsquo;s private object.</p>
 
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Different approach on the memoizer Function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">myFunction</span><span class="p">(){</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">first</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">I</span> <span class="nx">can</span> <span class="nx">access</span> <span class="k">this</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// undefined&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="k">if</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="kd">var</span> <span class="nx">second</span> <span class="o">=</span> <span class="s2">&quot;And also this&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span> <span class="c1">// &amp;ldquo;I can access this&amp;rdquo;</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// &amp;ldquo;And also this&amp;rdquo;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
 <p>Both functions are meant to be called the same way, and expected to have the same behaviour, but on the <code>isPrimeScoped</code> the &lsquo;cache&rsquo; object <code>answers</code> is private and not accessible from the global scope as a property of that function.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Running both functions </span></figcaption>
@@ -170,7 +207,54 @@
 </span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">isPrimeScoped</span><span class="p">.</span><span class="nx">answers</span> <span class="c1">// undefined</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>This technique, called closure, is very useful, and largely used when you want to protect objects from the global scope, if you browse through the jQuery code you will see it&rsquo;s use. On the global scope should be only objects/functions meant to be accessed by/from it.</p>
+<h1>Some further explanations</h1>
+
+<p>The availability of the <code>answers</code> object to the returned function happens because Javascript have a function scope, which means that whatever variable you write inside of a variable is going to be accessible on the entire function it&rsquo;s declared. This is due to the Javascript compiler, that picks any variable declaration and breaks into two parts, the first one is the declaration itself <code>var first = undefined, second = undefined;</code> and places on the very beginning of the function body. And the second part which is the value assignment and it&rsquo;s placed wherever the variable was first assigned. So the code above will be translated to someting similar to the following code:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Different approach on the memoizer Function </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">this</span><span class="p">.</span><span class="nx">myFunction</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">myFunction</span><span class="p">(){</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">first</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">,</span> <span class="nx">second</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">first</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">I</span> <span class="nx">can</span> <span class="nx">access</span> <span class="k">this</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// undefined&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="k">if</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">second</span> <span class="o">=</span> <span class="s2">&quot;And also this&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span> <span class="c1">// &amp;ldquo;I can access this&amp;rdquo;</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// &amp;ldquo;And also this&amp;rdquo;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>That is why the first log on the <code>second</code> variable is undefined, the variable was not asigned to any up to that point, which will defaults to undefined.</p>
+
+<p>You can also notice that the function declaration is modified to <code>this.myFunction = function myFunction(){...}</code>, this happens to make <code>myFunction</code> available to the global scope as window.myFunction, where &lsquo;this&rsquo; refers to the window object on the global scope.</p>
+
+<h1>Closure on the closure topic</h1>
+
+<p>Closures are very useful, and largely used when you want to protect objects from the global scope, if you browse through the jQuery code you will see it&rsquo;s use. On the global scope should be only objects/functions meant to be accessed by/from it.</p>
 
 <p>Paul Irish&rsquo;s <a href="https://www.youtube.com/watch?v=i_qE1iAmjFg">10 Things I Learned from the jQuery Source video</a> from 2010 (a, not so, long time ago) talks about that technique and more. you can also read about closure and other great techniques on the books mentioned on the beginning of this post.</p>
 
