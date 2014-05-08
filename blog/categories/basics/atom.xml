@@ -4,7 +4,7 @@
   <title><![CDATA[Category: basics | WebCloud]]></title>
   <link href="http://WebCloud.github.io/blog/categories/basics/atom.xml" rel="self"/>
   <link href="http://WebCloud.github.io/"/>
-  <updated>2014-05-08T02:24:23+02:00</updated>
+  <updated>2014-05-08T02:26:23+02:00</updated>
   <id>http://WebCloud.github.io/</id>
   <author>
     <name><![CDATA[Vinicius Dallacqua]]></name>
@@ -250,7 +250,7 @@
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>That is why the first log on the <code>second</code> variable is undefined, the variable was not asigned to any up to that point, which will defaults to undefined.</p>
+<p>That is why the first log on the <code>second</code> variable is undefined, the variable was not asigned to any value up to that point, which will defaults to undefined.</p>
 
 <p>You can also notice that the function declaration is modified to <code>this.myFunction = function myFunction(){...}</code>, this happens to make <code>myFunction</code> available to the global scope as window.myFunction, where &lsquo;this&rsquo; refers to the window object on the global scope.</p>
 
