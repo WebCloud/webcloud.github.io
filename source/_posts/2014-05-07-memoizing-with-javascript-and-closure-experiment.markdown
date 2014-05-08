@@ -64,21 +64,6 @@ var isPrimeScoped = (function(){
 
 The code above creates a auto executing anonymous function that will wrap the private variable `answers` into it's scope, after that it will return the function that will be stored on the `isPrimeScoped` variable to be used. Now, even though the first function gets executed and returned immediately, the variable `answers` will be available, only, for the returned function, making that variable it's private object.
 
-{% codeblock Different approach on the memoizer Function lang:javascript %}
-function myFunction(){
-  var first = "I can access this";
-
-  console.log(second); // undefined
-
-  if(true){
-    var second = "And also this";
-  }
-
-  console.log(first); // "I can access this"
-  console.log(second); // "And also this"
-}
-{% endcodeblock %}
-
 Both functions are meant to be called the same way, and expected to have the same behaviour, but on the `isPrimeScoped` the 'cache' object `answers` is private and not accessible from the global scope as a property of that function.
 
 {% codeblock Running both functions lang:javascript %}
@@ -105,7 +90,24 @@ isPrimeScoped.answers // undefined
 {% endcodeblock %}
 
 # Some further explanations
-The availability of the `answers` object to the returned function happens because Javascript have a function scope, which means that whatever variable you write inside of a variable is going to be accessible on the entire function it's declared. This is due to the Javascript compiler, that picks any variable declaration and breaks into two parts, the first one is the declaration itself `var first = undefined, second = undefined;` and places on the very beginning of the function body. And the second part which is the value assignment and it's placed wherever the variable was first assigned. So the code above will be translated to someting similar to the following code:
+The availability of the `answers` object to the returned function happens because Javascript have a function scope, which means that whatever variable you write inside of a function is going to be accessible on the entire function body.
+
+{% codeblock Different approach on the memoizer Function lang:javascript %}
+function myFunction(){
+  var first = "I can access this";
+
+  console.log(second); // undefined
+
+  if(true){
+    var second = "And also this";
+  }
+
+  console.log(first); // "I can access this"
+  console.log(second); // "And also this"
+}
+{% endcodeblock %}
+
+For some developers comming from most, if not all, languages that might look strange. This is due to the Javascript compiler/runtimes, it picks any variable declaration and breaks into two parts, the first one is the declaration itself `var first = undefined, second = undefined;` and places on the very beginning of the function body. And the second part which is the value assignment and it's placed wherever the variable was first assigned. So the code above will be translated to someting similar to the following code:
 
 {% codeblock Different approach on the memoizer Function lang:javascript %}
 this.myFunction = function myFunction(){
