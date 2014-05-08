@@ -4,7 +4,7 @@
   <title><![CDATA[WebCloud]]></title>
   <link href="http://WebCloud.github.io/atom.xml" rel="self"/>
   <link href="http://WebCloud.github.io/"/>
-  <updated>2014-05-08T02:21:32+02:00</updated>
+  <updated>2014-05-08T02:24:23+02:00</updated>
   <id>http://WebCloud.github.io/</id>
   <author>
     <name><![CDATA[Vinicius Dallacqua]]></name>
@@ -194,7 +194,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>For some developers comming from most, if not all, languages that might look strange. This is due to the Javascript compiler/runtimes, it picks any variable declaration and breaks into two parts, the first one is the declaration itself <code>var first = undefined, second = undefined;</code> and places on the very beginning of the function body. And the second part which is the value assignment and it&rsquo;s placed wherever the variable was first assigned. So the code above will be translated to someting similar to the following code:</p>
+<p>For some developers comming from most, if not all, languages that might look strange. This is due to the Javascript compiler/runtimes, it picks any variable declaration and breaks into two parts. The first one is the declaration itself <code>var first = undefined, second = undefined;</code> and places on the very beginning of the function body. And the second part which is the value assignment and it&rsquo;s placed wherever the variable was first assigned. So the code above will be translated to someting similar to the following code:</p>
 
 <figure class='code'><figcaption><span>Different approach on the memoizer Function </span></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
