@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Memoizing with Javascript - experiment"
+title: "Memoizing with Javascript and closure - experiment"
 date: 2014-05-07 19:59:07 +0200
 comments: true
 categories: [Javascript, basics]
 ---
 
-# It's good to know the basics
+## It's good to know the basics
 On this quick blog post we will see a glimpse of the power of the Javascript's functional scope and the usage of closures applied to _memoization_. With the usage of closures you can have a well structured, modular and reusable code with it's use.
 
 <!--more-->
@@ -39,7 +39,7 @@ function isPrime(value) {
 {% endcodeblock %}
 
 # The closure way
-Even though this code is very good to demonstrate that functions are first class objects, that might not be the most intended way to actually do that function. Mostly for security reasons, you don't want your internal objects used for control exposed to the global scope. Now, let's take a slightly different approach to the same problem.
+Even though the code above is very good to demonstrate that functions are first class objects, that might not be the most intended way to actually do that function. Mostly for security reasons, you don't want your internal objects used for control exposed to the global scope. Now, let's take a slightly different approach to the same problem.
 
 {% codeblock Different approach on the memoizer Function lang:javascript %}
 var isPrimeScoped = (function(){
